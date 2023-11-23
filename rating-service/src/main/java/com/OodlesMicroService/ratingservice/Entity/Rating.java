@@ -15,6 +15,7 @@ import lombok.Setter;
 @Table(name="rating")
 public class Rating {
 
+
     @Id
     private String ratingId;
     private String userId;

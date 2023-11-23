@@ -1,6 +1,8 @@
 package com.OodlesMicroService.userservice.controllers;
 
+import com.OodlesMicroService.userservice.Entities.Rating;
 import com.OodlesMicroService.userservice.Entities.User;
+import com.OodlesMicroService.userservice.RatingCleint.RatingClient;
 import com.OodlesMicroService.userservice.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RatingClient ratingClient;
 
 
     //create
@@ -40,6 +44,13 @@ public class UserController {
         return ResponseEntity.ok(allUser);
     }
 
+    @GetMapping("/with-ratings/{userId}")
+    public User getUserWithRatings(@PathVariable String userId){
+        User user=userService.getUser(userId);
+        List<Rating>ratingList=ratingClient.getRatingsByUserId(userId);
+        user.setRatings(ratingList);
+        return user;
+    }
 
 
 

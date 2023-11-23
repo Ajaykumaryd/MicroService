@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "micro_users")
+@Table(name = "users")
 public class User {
 
 
@@ -33,5 +33,6 @@ public class User {
 
     @Transient
     private List<Rating> ratings=new ArrayList<>();
+
 
 }

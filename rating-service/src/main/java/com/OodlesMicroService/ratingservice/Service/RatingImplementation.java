@@ -10,8 +10,6 @@ import java.util.List;
 @Service
 public class RatingImplementation implements RatingService {
 
-
-
     @Autowired
     private RatingRepository repository;
 
