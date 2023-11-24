@@ -1,6 +1,5 @@
 package com.OodlesMicroService.userservice.Entities;
 
-import com.OodlesMicroService.userservice.controllers.Hotel;
 import lombok.*;
 
 @Getter
@@ -15,5 +14,4 @@ public class Rating {
     private  int rating;
     private  String feedback;
     private Hotel hotel;
-
 }

@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @Column(name = "ID")
     private String userId;

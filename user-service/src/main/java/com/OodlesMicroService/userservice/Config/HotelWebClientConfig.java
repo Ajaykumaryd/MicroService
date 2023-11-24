@@ -1,7 +1,7 @@
 package com.OodlesMicroService.userservice.Config;
 
-
-import com.OodlesMicroService.userservice.RatingCleint.RatingClient;
+import com.OodlesMicroService.userservice.Client.HotelClient;
+import com.OodlesMicroService.userservice.Client.RatingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.reactive.LoadBalancedExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
@@ -11,32 +11,28 @@ import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Configuration
-public class WebClientConfig {
+public class HotelWebClientConfig {
+
+
 
     @Autowired
     private LoadBalancedExchangeFilterFunction filterFunction;
 
     @Bean
-    public WebClient ratingWebClient() {
+    public WebClient hotelWebClient() {
         return WebClient.builder()
-                .baseUrl("http://rating-service")
+                .baseUrl("http://Hotel-service")
                 .filter(filterFunction)
                 .build();
     }
     @Bean
-    public RatingClient RatingClient() {
+    public HotelClient hotelClient() {
         HttpServiceProxyFactory httpServiceProxyFactory
                 = HttpServiceProxyFactory
-                .builder(WebClientAdapter.forClient(ratingWebClient()))
+                .builder(WebClientAdapter.forClient(hotelWebClient()))
                 .build();
-        return httpServiceProxyFactory.createClient(RatingClient.class);
+        return httpServiceProxyFactory.createClient(HotelClient.class);
     }
-
-
-
-
-
-
 
 
 
