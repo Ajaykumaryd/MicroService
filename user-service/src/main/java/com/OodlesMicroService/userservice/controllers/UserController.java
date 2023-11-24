@@ -5,6 +5,7 @@ import com.OodlesMicroService.userservice.Entities.Hotel;
 import com.OodlesMicroService.userservice.Entities.Rating;
 import com.OodlesMicroService.userservice.Entities.User;
 import com.OodlesMicroService.userservice.Client.RatingClient;
+import com.OodlesMicroService.userservice.External.Service.HotelService;
 import com.OodlesMicroService.userservice.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     private HotelClient hotelClient;
+
+    @Autowired
+    private HotelService hotelService;  //for feight client
 
     //create
     @PostMapping
@@ -53,7 +57,8 @@ public class UserController {
         User user=userService.getUser(userId);
         List<Rating>ratingList=ratingClient.getRatingsByUserId(userId);
         for(Rating rating:ratingList){
-            ResponseEntity<Hotel>hotel=hotelClient.getHotel(rating.getHotelId());
+//            ResponseEntity<Hotel>hotel=hotelClient.getHotel(rating.getHotelId());
+            ResponseEntity<Hotel>hotel=hotelService.getHotel(rating.getHotelId());
             rating.setHotel(hotel.getBody());
         }
         user.setRatings(ratingList);
