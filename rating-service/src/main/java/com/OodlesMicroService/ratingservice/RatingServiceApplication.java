@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableDiscoveryClient   //to get register with Eureka Server
 public class RatingServiceApplication {
 	public static void main(String[] args) {
 
