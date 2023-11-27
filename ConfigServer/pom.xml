@@ -18,10 +18,14 @@
 		<spring-cloud.version>2023.0.0-RC1</spring-cloud.version>
 	</properties>
 	<dependencies>
+
+         <!--Config Server to make it as Server-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
+
+         <!--To make it as client w.r.t to Eureka Server-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

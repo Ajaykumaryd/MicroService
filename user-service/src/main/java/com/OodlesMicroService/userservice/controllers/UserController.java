@@ -7,6 +7,7 @@ import com.OodlesMicroService.userservice.Entities.User;
 import com.OodlesMicroService.userservice.Client.RatingClient;
 import com.OodlesMicroService.userservice.External.Service.HotelService;
 import com.OodlesMicroService.userservice.Services.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +22,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RatingClient ratingClient;
 
-    @Autowired
-    private HotelClient hotelClient;
-
-    @Autowired
-    private HotelService hotelService;  //for feight client
 
     //create
     @PostMapping
@@ -51,19 +45,18 @@ public class UserController {
         List<User> allUser = userService.getAllUser();
         return ResponseEntity.ok(allUser);
     }
-
-    @GetMapping("/with-ratings/{userId}")
-    public User getUserWithRatings(@PathVariable String userId){
+        @GetMapping("/with-ratings/{userId}")
+        @CircuitBreaker(name = "ratingHotelBreaker",fallbackMethod = "ratingHotelFallback")
+        public User getUserWithRatings(@PathVariable String userId){
         User user=userService.getUser(userId);
-        List<Rating>ratingList=ratingClient.getRatingsByUserId(userId);
-        for(Rating rating:ratingList){
-//            ResponseEntity<Hotel>hotel=hotelClient.getHotel(rating.getHotelId());
-            ResponseEntity<Hotel>hotel=hotelService.getHotel(rating.getHotelId());
-            rating.setHotel(hotel.getBody());
-        }
-        user.setRatings(ratingList);
         return user;
-    }
+        }
+
+        public ResponseEntity<User>ratingHotelFallBack(String userId,Exception ex){
+        User user = User.builder().email("dummy@gmail.com").name("Dummy").about("This user is created dummy because some service is down").userId("141234").build();
+        return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+        }
+
 
 
 
