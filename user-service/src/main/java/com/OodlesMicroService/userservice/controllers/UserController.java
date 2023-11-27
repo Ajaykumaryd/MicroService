@@ -45,34 +45,18 @@ public class UserController {
         List<User> allUser = userService.getAllUser();
         return ResponseEntity.ok(allUser);
     }
-        @GetMapping("/with-ratings/{userId}")
-        @CircuitBreaker(name = "ratingHotelBreaker",fallbackMethod = "ratingHotelFallback")
-        public User getUserWithRatings(@PathVariable String userId){
-        User user=userService.getUser(userId);
-        return user;
-        }
 
-        public ResponseEntity<User>ratingHotelFallBack(String userId,Exception ex){
+    @GetMapping("/with-ratings/{userId}")
+    @CircuitBreaker(name = "ratingHotelBreaker", fallbackMethod = "ratingHotelFallback")
+    public ResponseEntity<User> get(@PathVariable String userId) {
+        User user = userService.getUser(userId);
+        return ResponseEntity.ok(user);
+    }
+
+    //creating fall back  method for circuitbreaker
+    public ResponseEntity<User> ratingHotelFallback(String userId, Exception ex) {
         User user = User.builder().email("dummy@gmail.com").name("Dummy").about("This user is created dummy because some service is down").userId("141234").build();
         return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 
 }
