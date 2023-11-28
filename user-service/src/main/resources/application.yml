@@ -40,12 +40,18 @@ resilience4j:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
         failureRateThreshold: 50
-        minimumNumberOfCalls: 5  //after 5 fail calls circuit opens
+        minimumNumberOfCalls: 5   #after 5 fail calls circuit opens
         automaticTransitionFromOpenToHalfOpenEnabled: true
-        waitDurationInOpenState: 6s //after open to goes to half open after 6 seconds
-        permittedNumberOfCallsInHalfOpenState: 3  //3 calls are in limit if rating can work fine it goes to close state if not then it goes to open state
+        waitDurationInOpenState: 6s #after open to goes to half open after 6 seconds
+        permittedNumberOfCallsInHalfOpenState: 3  #calls are in limit if rating can work fine it goes to close state if not then it goes to open state
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+
+  retry:
+    instances:
+      ratingHotelService:
+        max-attempts: 3
+        wait-duration: 5s
 
 
 
