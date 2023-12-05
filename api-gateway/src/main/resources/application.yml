@@ -25,7 +25,10 @@ spring:
           predicates:
             - Path=/ratings/**
 
-
+        - id:
+          uri: lb://Authentication
+          predicates:
+            - Path=/authentication/**
 
 
 

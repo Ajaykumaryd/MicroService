@@ -8,8 +8,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient   //to get register with Eureka Server
 public class RatingServiceApplication {
 	public static void main(String[] args) {
-
 		SpringApplication.run(RatingServiceApplication.class, args);
-	}
 
+
+	}
 }
